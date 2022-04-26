@@ -33,3 +33,139 @@
     * when I give you my code, I won't worry  my identifiers are 100% unique
     * downside: others easily get confused, which one is being called when
 
+# example
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int add(int x) {
+    int sum = 0;
+    sum += x;
+    return sum;
+}
+
+int main () {
+
+    printf("%d\n",add(5));
+
+    return 0;
+}
+
+/*
+output:
+5
+*/
+```
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int add(int x) {
+    int sum = 0;
+    sum += x;
+    return sum;
+}
+
+int main () {
+
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+
+    return 0;
+}
+
+
+
+/*
+output:
+
+5
+5
+5
+5
+5
+5
+*/
+```
+### if we use the `static` keyword
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int add(int x) {
+    int static sum = 0;
+    sum += x;
+    return sum;
+}
+
+int main () {
+
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+
+    return 0;
+}
+
+/*
+output:
+
+5
+10
+15
+20
+25
+30
+
+*/
+```
+### the `sum` variable won't be reinitialized when the `add` function be called again
+### it's seems like makeing it like a golbal variable, but, we can not call `sum` in main function
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int add(int x) {
+    int static sum = 0;
+    sum += x;
+    return sum;
+}
+
+int main () {
+
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+    printf("%d\n",add(5));
+
+
+    printf("%d\n",sum);
+
+    return 0;
+}
+
+error:
+static.c: In function ‘main’:
+static.c:18:19: error: ‘sum’ undeclared (first use in this function)
+   18 |     printf("%d\n",sum);
+      |                   ^~~
+static.c:18:19: note: each undeclared identifier is reported only once for each function it appears in
+
+
+```
+
+
+
+
